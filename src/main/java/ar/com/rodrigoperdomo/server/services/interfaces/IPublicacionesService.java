@@ -6,7 +6,7 @@ import ar.com.rodrigoperdomo.server.dtos.ResponseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IPublicacionesService {
-  ResponseDTO crearNuevoProducto(MultipartFile file, ProductoDTO productoDTO);
+  ResponseDTO crearNuevoProducto(MultipartFile file, String productoDTO);
 
   ResponseDTO leerTodosProductos();
 

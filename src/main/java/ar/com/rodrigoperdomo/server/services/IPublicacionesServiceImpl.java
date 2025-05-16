@@ -13,6 +13,8 @@ import ar.com.rodrigoperdomo.server.services.interfaces.ICloudinaryService;
 import ar.com.rodrigoperdomo.server.services.interfaces.IPublicacionesService;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,20 +35,22 @@ public class IPublicacionesServiceImpl implements IPublicacionesService {
    * @return ResponseDTO con el resultado de la acción
    */
   @Override
-  public ResponseDTO crearNuevoProducto(MultipartFile file, ProductoDTO productoDTO) {
+  public ResponseDTO crearNuevoProducto(MultipartFile file, String productoDTO) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
+      ObjectMapper mapper = new ObjectMapper();
       Publicaciones newPublicaciones = new Publicaciones();
-      newPublicaciones.setNombreProducto(productoDTO.getNombreProducto());
-      newPublicaciones.setDescripcionProducto(productoDTO.getDescripcion());
-      newPublicaciones.setPrecioProducto(productoDTO.getPrecio());
-      newPublicaciones.setCantidadProducto(productoDTO.getCantidadProducto());
+      ProductoDTO productoDTO1 = mapper.readValue(productoDTO, ProductoDTO.class);
+      newPublicaciones.setNombreProducto(productoDTO1.getNombreProducto());
+      newPublicaciones.setDescripcionProducto(productoDTO1.getDescripcion());
+      newPublicaciones.setPrecioProducto(productoDTO1.getPrecio());
+      newPublicaciones.setCantidadProducto(productoDTO1.getCantidadProducto());
       try {
         String urlImagen = cloudinaryService.uploadFile(file);
         newPublicaciones.setImagenUrl(urlImagen);
         Usuarios userByRequest =
             usuarioRepository
-                .findById(productoDTO.getIdUsuario())
+                .findById(productoDTO1.getIdUsuario())
                 .orElseThrow(() -> new NoSuchElementException(USER_NOT_FOUND));
         newPublicaciones.setUsuarios(userByRequest);
         publicacionesRepository.save(newPublicaciones);

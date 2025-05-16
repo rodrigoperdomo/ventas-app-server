@@ -37,4 +37,11 @@ public class Constantes {
   public static final String BARRA = "/";
   public static final String BARRA_REGEXP = "\\.[^\\.]+$";
   public static final String VACIO = "";
+  // Swagger
+  public static final String TITLE_API = "Ventas Server";
+  public static final String VERSION_API = "1.0";
+  public static final String DESCRIPTION_API_SWAGGER = "Documentación del servidor, endpoints";
+  public static final String BEARER_AUTH_STRING = "bearerAuth";
+  public static final String BEARER_STRING = "bearer";
+  public static final String JWT_STRING = "JWT";
 }

@@ -1,16 +1,20 @@
 package ar.com.rodrigoperdomo.server.controllers;
 
-import ar.com.rodrigoperdomo.server.dtos.ProductoDTO;
+import static ar.com.rodrigoperdomo.server.utils.Constantes.BEARER_AUTH_STRING;
+
 import ar.com.rodrigoperdomo.server.dtos.PublicacionesDTO;
 import ar.com.rodrigoperdomo.server.dtos.ResponseDTO;
 import ar.com.rodrigoperdomo.server.services.interfaces.IPublicacionesService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/publicaciones")
+@SecurityRequirement(name = BEARER_AUTH_STRING)
 public class PublicacionesController {
 
   @Autowired IPublicacionesService publicacionesService;
@@ -22,9 +26,9 @@ public class PublicacionesController {
    * @param file
    * @return ResponseDTO con el resultado de la acción
    */
-  @PostMapping("/crear")
+  @PostMapping(value = "/crear", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseDTO crearPublicacion(
-      @RequestPart("producto") ProductoDTO productoDTO, @RequestPart("file") MultipartFile file) {
+      @RequestPart("producto") String productoDTO, @RequestPart("file") MultipartFile file) {
     try {
       return publicacionesService.crearNuevoProducto(file, productoDTO);
     } catch (Exception e) {
@@ -119,7 +123,7 @@ public class PublicacionesController {
    * @param file
    * @return ResponseDTO con el resultado de la acción
    */
-  @PostMapping("/asociar-imagen")
+  @PostMapping(value = "/asociar-imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseDTO asociarImagen(
       @RequestPart("idPublicacion") Long idPublicacion, @RequestPart("file") MultipartFile file) {
     try {
