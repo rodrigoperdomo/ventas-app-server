@@ -16,7 +16,7 @@ public interface IPublicacionesService {
 
   ResponseDTO deleteImagenPublicacion(Long idPublicacion);
 
-  ResponseDTO asociarImagenPublicacion(Long idPublicacion, MultipartFile file);
+  ResponseDTO asociarImagenPublicacion(String idPublicacion, MultipartFile file);
 
   ResponseDTO deletePublicaicon(Long idPublicacion);
 }

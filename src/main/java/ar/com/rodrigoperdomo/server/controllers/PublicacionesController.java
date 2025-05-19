@@ -125,7 +125,7 @@ public class PublicacionesController {
    */
   @PostMapping(value = "/asociar-imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseDTO asociarImagen(
-      @RequestPart("idPublicacion") Long idPublicacion, @RequestPart("file") MultipartFile file) {
+      @RequestPart("idPublicacion") String idPublicacion, @RequestPart("file") MultipartFile file) {
     try {
       return publicacionesService.asociarImagenPublicacion(idPublicacion, file);
     } catch (Exception e) {

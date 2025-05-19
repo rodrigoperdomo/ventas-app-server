@@ -202,10 +202,12 @@ public class IPublicacionesServiceImpl implements IPublicacionesService {
    * @return ResponseDTO con el resultado de la acción
    */
   @Override
-  public ResponseDTO asociarImagenPublicacion(Long idPublicacion, MultipartFile file) {
+  public ResponseDTO asociarImagenPublicacion(String idPublicacion, MultipartFile file) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      cloudinaryService.asociarImagenPublicacion(idPublicacion, file);
+      ObjectMapper mapper = new ObjectMapper();
+      Long idPublicacionLong = mapper.readValue(idPublicacion, Long.class);
+      cloudinaryService.asociarImagenPublicacion(idPublicacionLong, file);
       responseDTO.setStatus(HttpStatus.OK.value());
       responseDTO.setBody(null);
       responseDTO.setMessage(IMAGEN_UPLOAD_SUCCESS_ASSOCIATE_PUBLICACION);
@@ -227,11 +229,13 @@ public class IPublicacionesServiceImpl implements IPublicacionesService {
   public ResponseDTO deletePublicaicon(Long idPublicacion) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      cloudinaryService.deleteFile(idPublicacion);
       Publicaciones publicacionByRequest =
           publicacionesRepository
               .findById(idPublicacion)
               .orElseThrow(() -> new NoSuchElementException(PUBLICACION_NOT_FOUND));
+      if (publicacionByRequest.getImagenUrl() != null) {
+        cloudinaryService.deleteFile(idPublicacion);
+      }
       publicacionesRepository.delete(publicacionByRequest);
       responseDTO.setStatus(HttpStatus.OK.value());
       responseDTO.setBody(null);
