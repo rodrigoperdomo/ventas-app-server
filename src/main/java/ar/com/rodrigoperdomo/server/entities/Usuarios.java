@@ -23,4 +23,7 @@ public class Usuarios {
 
   @Column(name = "email")
   private String email;
+
+  @Column(name = "numero")
+  private String numero;
 }

@@ -42,6 +42,7 @@ public class IUsuarioServiceImpl implements IUsuarioService {
       newUsuario.setUsername(registerDTO.getUsername());
       newUsuario.setEmail(registerDTO.getEmail());
       newUsuario.setPassword(hashpassword);
+      newUsuario.setNumero(registerDTO.getNumero());
       usuarioRepository.save(newUsuario);
       responseDTO.setStatus(HttpStatus.CREATED.value());
       responseDTO.setMessage(USER_CREATED_SUCCESS);
