@@ -49,6 +49,10 @@ public class Constantes {
   public static final String BEARER_AUTH_STRING = "bearerAuth";
   public static final String BEARER_STRING = "bearer";
   public static final String JWT_STRING = "JWT";
+  public static final String JSON_CREAR_PRODUCTO_DESCRIPCION_KEY =
+      "JSON del producto como string, ejemplo:";
+  public static final String JSON_CREAR_PRODUCTO_DESCRIPCION =
+      "{ nombreProducto: Test, descripcion: desc, precio: 123, cantidadProducto: 1, idUsuario: 1 }";
   // EMAIL
   public static final String ASUNTO_MAIL = "Compra-Venta del producto ";
   public static final String CUERPO_MAIL =

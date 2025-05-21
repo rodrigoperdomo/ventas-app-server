@@ -1,10 +1,11 @@
 package ar.com.rodrigoperdomo.server.controllers;
 
-import static ar.com.rodrigoperdomo.server.utils.Constantes.BEARER_AUTH_STRING;
+import static ar.com.rodrigoperdomo.server.utils.Constantes.*;
 
 import ar.com.rodrigoperdomo.server.dtos.PublicacionesDTO;
 import ar.com.rodrigoperdomo.server.dtos.ResponseDTO;
 import ar.com.rodrigoperdomo.server.services.interfaces.IPublicacionesService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,11 @@ public class PublicacionesController {
    */
   @PostMapping(value = "/crear", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseDTO crearPublicacion(
-      @RequestPart("producto") String productoDTO, @RequestPart("file") MultipartFile file) {
+      @RequestPart("producto")
+          @Parameter(
+              description = JSON_CREAR_PRODUCTO_DESCRIPCION_KEY + JSON_CREAR_PRODUCTO_DESCRIPCION)
+          String productoDTO,
+      @RequestPart("file") MultipartFile file) {
     try {
       return publicacionesService.crearNuevoProducto(file, productoDTO);
     } catch (Exception e) {
